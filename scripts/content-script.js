@@ -9,6 +9,7 @@ iframe.style.width = "0px";
 iframe.style.position = "fixed";
 iframe.style.top = "0px";
 iframe.style.right = "0px";
+iframe.style.transition = "all .5s";
 iframe.style.zIndex = "9000000000000000000";
 iframe.frameBorder = "none";
 iframe.src = chrome.extension.getURL("popup.html")
@@ -28,6 +29,7 @@ function toggle(){
 function getSource(){
   chrome.runtime.sendMessage({
     action: "source",
+    host: location.host,
     source: DOMtoString(document)
   });
 }
