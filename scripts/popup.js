@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
   console.log("Message reçu popup")
   console.dir(request)
   if (request.action == "infos") {
-    const { marque, modele, version } = request.data;
+    const { marque, modele, version } = request.data.voiture;
     message.innerText = `Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}`;
   }
 });
