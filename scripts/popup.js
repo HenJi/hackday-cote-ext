@@ -1,12 +1,47 @@
 var page;
 var message;
+var versions;
+
+
+function selectV(versions) {
+  var html = '<div class="selectFinition"><p>Sélectionnez une finition</p><select>'
+  
+  for(var i = 0; i < versions.length; i++) {
+    html = html + `<option value=${versions[i]}>${versions[i]}</option>`
+  }
+  console.log(html)
+  html = html + '</select></div>'
+ return html
+}
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "source") {
     page = parseHtml(request.source);
     const data = buildData(request.host, page);
-    const { marque, modele, version } = data.voiture;
-    message.innerText = `Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}`;
+    const { marque, modele, version, millesime } = data.voiture;
+    const { km, prix } = data.annonce;
+    if (!version) {
+      var select = getVersions(marque, modele, millesime)(function(v){
+        const select = selectV(v)
+        $('#message').append(select
+          + `<div class="info cote-brute">`
+            + `<div class="data">`
+              + `<p id="cote"> Côte brute </p> `
+              + `<div class="prix">${prix} €</div>`
+            + `</div>`
+            +`<p class="km"> Pour un kilométrage de: ${km} km</p>`
+          +`</div>`
+           + `<div class="info cote-affinee">`
+            + `<div class="data">`
+              + `<p id="cote"> Côte brute </p> `
+              + `<div class="prix">${prix}</div>`
+            + `</div>`
+            +`<p class="km"> Pour un kilométrage de: ${km} km</p>`
+          +`</div>`
+        )
+      })
+    }
+    else $('#message').append(`<div class="data">\n Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}</div>`);
   }
 });
 
@@ -62,6 +97,6 @@ function getVersions(marque, modele, millesime) {
     for (var i = 0; i < versions.length; i++) {
         if (versions[i]) res.push(versions[i].textContent);
       }
-      cb(res);
-    })
+    cb(res);
+  })
 }

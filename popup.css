@@ -1,0 +1,57 @@
+body { margin: 0; background-color: #F6F6F6; }
+body #message {
+  font-family: 'Arimo', sans-serif;
+  margin: 0;
+}
+
+.selectFinition {
+  padding: 15px 10px;
+  border-bottom: solid 1px #CDCDCD;
+}
+
+.selectFinition  p {
+  margin: 5px;
+}
+
+select {
+  height: 44px;
+  width: 250px;
+  border: solid 1px #CDCDCD;
+  border-radius: 0px;
+  background-color: white
+}
+
+.data {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data  {
+  flex-wrap: wrap;
+  font-size: 1.0rem;
+}
+
+.km {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px;
+  background-color: white;
+}
+
+.cote-brute, .cote-affinee {
+  border-bottom: solid 1px #CDCDCD;
+}
+
+#cote {
+  font-size: 1.2rem;
+}
+
+.prix {
+  font-size: 1.4rem;
+  width: 30%;
+}
