@@ -4,7 +4,7 @@ var LACENTRALE = (function () {
     return (cb) => {
       const base = "http://www.lacentrale.fr/listing_auto.php";
       const url = version ? base : base + `?version=${version}`;
-      return $.get(url, {tri:"VE_MILEAGE", sens:1, marque, modele, annee, annee2}).then(function(content){
+      return $.get(url, {tri:"VE_MILEAGE", sens:1, marque, modele, annee:anneeMin, annee2:anneeMax}).then(function(content){
         const data = parseHtml(content);
         const nb = $(data).find(".numAnn")[0].textContent;
         console.log(nb+" annonces");

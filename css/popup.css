@@ -7,7 +7,7 @@ body #container {
 
 /* Selecteur finition */
 
-.selectFinition {
+.selectFinition, #similar {
   padding: 15px 15px;
   border-bottom: solid 1px #CDCDCD;
 }

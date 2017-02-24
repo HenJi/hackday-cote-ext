@@ -3,16 +3,24 @@ var container;
 var versions;
 var carData;
 
-function afficherCotes(container){
+function afficherCotes(container, version){
   return function(cotes) {
     console.dir(cotes);
     if (cotes) {
+      const { marque, modele, millesime } = carData.voiture;
       const { cote_brute, cote_perso, price_new, year_mileage } = cotes;
       const { km, prix } = carData.annonce;
       $(container).html(
         coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
         + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
       );
+      /*
+      LACENTRALE.getAnnonces(marque, modele, millesime, millesime, version)(function(res){
+        $("#similar").html(
+          '<div class="subtitle"></div>'
+        )
+      })
+      */
     } else
       $(container).html(
         coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
@@ -24,7 +32,7 @@ function selectMission() {
   const version = $("#finition")[0].value;
   const { marque, modele, millesime } = carData.voiture;
   const { km, prix } = carData.annonce;
-  getCotes(marque, modele, version, millesime, km, 6)(afficherCotes("#results"));
+  getCotes(marque, modele, version, millesime, km, 6)(afficherCotes("#results", version));
 }
 
 function selectVersions(versions) {
@@ -56,6 +64,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "source") {
     page = parseHtml(request.source);
     carData = buildData(request.host, page);
+    console.dir(carData);
     const { marque, modele, version, millesime } = carData.voiture;
     const { km, prix } = carData.annonce;
     if (!version) {
@@ -67,7 +76,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       })
     } else {
       const mois = parseInt(carData.annonce.miseEnCirculation.split("/")[1].trim())
-      getCotes(marque, modele, version, millesime, km, mois)(afficherCotes("#container"));
+      getCotes(marque, modele, version, millesime, km, mois)(afficherCotes("#container", version));
     }
   }
 });
