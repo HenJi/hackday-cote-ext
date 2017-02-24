@@ -1,12 +1,36 @@
 var page;
 var container;
 var versions;
+var carData;
 
+function afficherCotes(container){
+  return function(cotes) {
+    console.dir(cotes);
+    if (cotes) {
+      const { cote_brute, cote_perso, price_new, year_mileage } = cotes;
+      const { km, prix } = carData.annonce;
+      $(container).html(
+        coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
+        + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
+      );
+    } else
+      $(container).html(
+        coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
+      );
+  }
+}
+
+function selectMission() {
+  const version = $("#finition")[0].value;
+  const { marque, modele, millesime } = carData.voiture;
+  const { km, prix } = carData.annonce;
+  getCotes(marque, modele, version, millesime, km, 6)(afficherCotes("#results"));
+}
 
 function selectVersions(versions) {
-  var html = '<div class="selectFinition"><p>Sélectionnez une finition</p><select>'
+  var html = '<div class="selectFinition"><select id="finition"><option value="">Sélectionnez une finition</option>'
   for(var i = 0; i < versions.length; i++) {
-    html = html + `<option value=${versions[i]}>${versions[i]}</option>`
+    html = html + `<option value="${versions[i]}">${versions[i]}</option>`
   }
   html = html + '</select></div>'
  return html
@@ -31,31 +55,19 @@ function coteBlock(title, prix, kmText) {
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "source") {
     page = parseHtml(request.source);
-    const data = buildData(request.host, page);
-    const { marque, modele, version, millesime } = data.voiture;
-    const { km, prix } = data.annonce;
+    carData = buildData(request.host, page);
+    const { marque, modele, version, millesime } = carData.voiture;
+    const { km, prix } = carData.annonce;
     if (!version) {
       getVersions(marque, modele, millesime)(function(versions){
         $(container).html(
-          selectVersions(versions)
+          selectVersions(versions) + '<div id="results"></div>'
         )
+        $("#finition").change(selectMission);
       })
     } else {
-      const mois = parseInt(data.annonce.miseEnCirculation.split("/")[1].trim())
-      getCotes(marque, modele, version, millesime, km, mois)(function(cotes){
-        console.dir(cotes);
-        if (cotes) {
-          const { cote_brute, cote_perso, price_new, year_mileage } = cotes;
-          $(container).html(
-            coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
-            + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
-          );
-        } else {
-          $(container).html(
-            coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
-          )
-        }
-      });
+      const mois = parseInt(carData.annonce.miseEnCirculation.split("/")[1].trim())
+      getCotes(marque, modele, version, millesime, km, mois)(afficherCotes("#container"));
     }
   }
 });

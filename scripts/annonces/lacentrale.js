@@ -28,11 +28,15 @@ var LACENTRALE = (function () {
     const modele = $(page).find("h3 > strong")[0].textContent;
     const version = $(page).find("h1 .versionTxt")[0].textContent;
     const prix = parseInt($(page).find(".mainInfos .floatR strong")[0].textContent.replace(/ /g, ""));
-    const infos = $(page).find(".infoGeneraleTxt p");
-    const millesime = parseInt(infos[0].textContent);
-    const km = parseInt(infos[1].textContent.split(" "));
-    const miseEnCirculation = infos[7].textContent;
-    const premiereMain = infos[11] == "oui";
+    const getInfoText = (key) => {
+      const h4 = $(page).find(`.infoGeneraleTxt > *:contains('${key}')`)
+      if (h4.length > 0) return h4[0].nextSibling.nextSibling.textContent.trim();
+      else return "";
+    }
+    const millesime = parseInt(getInfoText("Année"));
+    const km = parseInt(getInfoText("Kilométrage"));
+    const miseEnCirculation = getInfoText("Mise en circulation");
+    const premiereMain = getInfoText("Première main");
     const voiture = { marque, modele, version, millesime };
     const annonce = { km, premiereMain, prix, miseEnCirculation };
     console.dir( { voiture, annonce } )
