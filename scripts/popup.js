@@ -70,10 +70,10 @@ function getCotes(marque, modele, version, millesime, km, mois) {
 function getVersions(marque, modele, millesime) {
   return (cb) =>
     $.get(`http://www.lacentrale.fr/cote-voitures-${marque}-${modele}--${millesime}-.html`).then(function(content){
-      const data = $(content);
+    const data = $(content);
     const versions = $(data).find('.listingResult .listingResultLine h3');
-      const res = [];
-    for (var i = 0; i < elt.length; i++) {
+    const res = [];
+    for (var i = 0; i < versions.length; i++) {
         if (versions[i]) res.push(versions[i].textContent);
       }
       cb(res);
