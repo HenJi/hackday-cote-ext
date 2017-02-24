@@ -1,0 +1,57 @@
+body { margin: 0; background-color: #F6F6F6; }
+body #container {
+  font-family: 'Arimo', sans-serif;
+  font-size: 11px;
+  margin: 0;
+}
+
+/* Selecteur finition */
+
+.selectFinition, #similar {
+  padding: 15px 15px;
+  border-bottom: solid 1px #CDCDCD;
+}
+
+.selectFinition  p {
+  margin: 5px;
+  font-size: 0.9rem;
+}
+
+select {
+  margin-top: 5px;
+  height: 36px;
+  width: 100%;
+  border: solid 1px #CDCDCD;
+  border-radius: 0px;
+  background-color: white
+}
+
+/* bloc côte */
+
+.cote-info {
+  display: flex;
+  padding: 15px 15px;
+  background-color: white;
+  border-bottom: solid 1px #CDCDCD;
+  justify-content: space-between;
+}
+
+.cote-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.cote-data .title {
+  font-size: 1.1rem;
+}
+
+.cote-data .km {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.cote-prix {
+  font-size: 1.15rem;
+  text-align: right;
+  width: 35%;
+}
