@@ -11,7 +11,8 @@ function afficherCotes(container, version){
       const { cote_brute, cote_perso, price_new, year_mileage } = cotes;
       const { km, prix } = carData.annonce;
       $(container).html(
-        coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
+        `<img src="../img/lacentrale.png">`
+        + coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
         + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
       );
       LACENTRALE.getAnnonces(marque, modele, millesime, millesime, version)(function(res){
@@ -29,7 +30,8 @@ function afficherCotes(container, version){
       })
     } else
       $(container).html(
-        coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
+        `<img src="../img/lacentrale.png">`
+        + coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
       );
   }
 }
