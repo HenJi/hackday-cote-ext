@@ -26,6 +26,7 @@ function DOMtoString(document_root) {
 }
 
 chrome.runtime.sendMessage({
-    action: "getSource",
+    action: "source",
+    host: location.host,
     source: DOMtoString(document)
 });
