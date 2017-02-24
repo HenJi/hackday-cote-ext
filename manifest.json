@@ -16,5 +16,5 @@
     "inject.html", "popup.html"
   ],
   "permissions": [ "contextMenus", "management", "tabs", "storage", "<all_urls>" ],
-  "content_security_policy": "default-src 'self'; connect-src http://www.lacentrale.fr/; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+  "content_security_policy": "default-src 'self'; connect-src http://www.lacentrale.fr/ https://www.leboncoin.fr; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
