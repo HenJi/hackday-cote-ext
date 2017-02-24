@@ -28,7 +28,7 @@ function onWindowLoad() {
 window.onload = onWindowLoad;
 
 function buildData(host, page) {
-  if (host === "www.lacentrale.fr") { LACENTRALE.paseData(page)
+  if (host === "www.lacentrale.fr") { return LACENTRALE.parseData(page)
   } else if (host === "www.leboncoin.fr") {
     const marque = $(page).find("[itemprop='brand']")[0].textContent.trim();
     const modele = $(page).find("[itemprop='model']")[0].textContent.trim();

@@ -8,7 +8,7 @@ var LACENTRALE = (function () {
         const data = parseHtml(content);
         const nb = $(data).find(".numAnn")[0].textContent;
         console.log(nb+" annonces");
-        const ( annonces, moyenne ) = getDetailAnnonces(data);
+        const { annonces, moyenne } = getDetailAnnonces(data);
         cb({ nb, annonces, moyenne });
       })
     }
@@ -35,6 +35,7 @@ var LACENTRALE = (function () {
     const premiereMain = infos[11] == "oui";
     const voiture = { marque, modele, version, millesime };
     const annonce = { km, premiereMain, prix, miseEnCirculation };
+    console.dir( { voiture, annonce } )
     return { voiture, annonce };
   }
 
