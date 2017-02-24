@@ -1,57 +1,56 @@
 body { margin: 0; background-color: #F6F6F6; }
-body #message {
+body #container {
   font-family: 'Arimo', sans-serif;
+  font-size: 11px;
   margin: 0;
 }
 
+/* Selecteur finition */
+
 .selectFinition {
-  padding: 15px 10px;
+  padding: 15px 15px;
   border-bottom: solid 1px #CDCDCD;
 }
 
 .selectFinition  p {
   margin: 5px;
+  font-size: 0.9rem;
 }
 
 select {
-  height: 44px;
-  width: 250px;
+  margin-top: 5px;
+  height: 36px;
+  width: 100%;
   border: solid 1px #CDCDCD;
   border-radius: 0px;
   background-color: white
 }
 
-.data {
+/* bloc côte */
+
+.cote-info {
   display: flex;
+  padding: 15px 15px;
+  background-color: white;
+  border-bottom: solid 1px #CDCDCD;
   justify-content: space-between;
 }
 
-.data  {
-  flex-wrap: wrap;
-  font-size: 1.0rem;
+.cote-data {
+  display: flex;
+  flex-direction: column;
 }
 
-.km {
+.cote-data .title {
+  font-size: 1.1rem;
+}
+
+.cote-data .km {
   margin-top: 15px;
   font-size: 0.9rem;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  padding: 15px 10px;
-  background-color: white;
-}
-
-.cote-brute, .cote-affinee {
-  border-bottom: solid 1px #CDCDCD;
-}
-
-#cote {
+.cote-prix {
   font-size: 1.2rem;
-}
-
-.prix {
-  font-size: 1.4rem;
-  width: 30%;
+  text-align: right;
 }

@@ -1,5 +1,5 @@
 var page;
-var message;
+var container;
 var versions;
 
 
@@ -12,6 +12,22 @@ function selectV(versions) {
  return html
 }
 
+function printNum(i) {
+  return i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+function coteBlock(title, prix, km) {
+  return (
+    `<div class="cote-info">`
+    + `<div class="cote-data">`
+      + `<p class="title">${title}</p> `
+      + `<p class="km">Pour un kilométrage de :<br/>${printNum(km)} km</p>`
+    + `</div>`
+    + `<div class="cote-prix">${printNum(prix)} €</div>`
+  + `</div>`
+  )
+}
+
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "source") {
     page = parseHtml(request.source);
@@ -20,22 +36,10 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     const { km, prix } = data.annonce;
     //if (!version) {
       var select = getVersions(marque, modele, millesime)(function(v){
-        const select = selectV(v)
-        $('#message').append(select
-          + `<div class="info cote-brute">`
-            + `<div class="data">`
-              + `<p id="cote"> Côte brute </p> `
-              + `<div class="prix">${prix} €</div>`
-            + `</div>`
-            +`<p class="km"> Pour un kilométrage de: ${km} km</p>`
-          +`</div>`
-           + `<div class="info cote-affinee">`
-            + `<div class="data">`
-              + `<p id="cote"> Côte brute </p> `
-              + `<div class="prix">${prix}</div>`
-            + `</div>`
-            +`<p class="km"> Pour un kilométrage de: ${km} km</p>`
-          +`</div>`
+        $(container).html(
+          selectV(v)
+          + coteBlock("Côte brute", prix, km)
+          + coteBlock("Côte affinée", prix, km)
         )
       })
     //}
@@ -45,7 +49,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
 function onWindowLoad() {
 
-  message = document.querySelector('#message');
+  container = $("#container")
 
   chrome.tabs.executeScript(null, {
     file: "scripts/getPageSource.js"
