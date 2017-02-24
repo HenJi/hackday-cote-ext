@@ -5,11 +5,9 @@ var versions;
 
 function selectV(versions) {
   var html = '<div class="selectFinition"><p>Sélectionnez une finition</p><select>'
-  
   for(var i = 0; i < versions.length; i++) {
     html = html + `<option value=${versions[i]}>${versions[i]}</option>`
   }
-  console.log(html)
   html = html + '</select></div>'
  return html
 }
@@ -20,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     const data = buildData(request.host, page);
     const { marque, modele, version, millesime } = data.voiture;
     const { km, prix } = data.annonce;
-    if (!version) {
+    //if (!version) {
       var select = getVersions(marque, modele, millesime)(function(v){
         const select = selectV(v)
         $('#message').append(select
@@ -40,8 +38,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
           +`</div>`
         )
       })
-    }
-    else $('#message').append(`<div class="data">\n Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}</div>`);
+    //}
+    //else $('#message').append(`<div class="data">\n Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}</div>`);
   }
 });
 
