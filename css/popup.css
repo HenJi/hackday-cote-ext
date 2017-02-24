@@ -1,5 +1,5 @@
 body { margin: 0; background-color: #F6F6F6; }
-body #container {
+body {
   font-family: 'Arimo', sans-serif;
   font-size: 11px;
   margin: 0;
@@ -22,6 +22,11 @@ img {
   height: 24px;
   margin-top: 15px;
   margin-left: 15px;
+}
+
+#leboncoinImg {
+  width: 137px;
+  height: 24px;
 }
 
 select {
@@ -79,4 +84,8 @@ select {
 
 #similar .cote-info {
   background-color: transparent;
+}
+
+#similar img {
+  margin: 0;
 }

@@ -19,12 +19,12 @@ function afficherCotes(container, version){
         const { nb, moyenne } = res;
         $("#similar").html(
           '<div class="subtitle">Valeurs de vente constatées</div>'
-          + coteBlock("LaCentrale", moyenne, `Pour ${nb} annonces similaires`)
+          + coteBlock(`<img src="../img/lacentrale.png">`, moyenne, `Pour ${nb} annonces similaires`)
         )
         LEBONCOIN.getAnnonces(marque, modele, millesime, millesime)(function(res){
           const { nb, moyenne } = res;
           $("#similar").append(
-            coteBlock("LeBonCoin", moyenne, `Pour ${nb} annonces similaires`)
+            coteBlock(`<img id="leboncoinImg" src="../img/leboncoin.png">`, moyenne, `Pour ${nb} annonces similaires`)
           )
         })
       })
