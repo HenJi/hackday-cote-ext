@@ -2,10 +2,8 @@ var page;
 var message;
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
-  console.log("Message reçu popup")
-  console.dir(request)
   if (request.action == "source") {
-    page = $(request.source);
+    page = parseHtml(request.source);
     const data = buildData(request.host, page);
     const { marque, modele, version } = data.voiture;
     message.innerText = `Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}`;
@@ -70,7 +68,7 @@ function getCotes(marque, modele, version, millesime, km, mois) {
 function getVersions(marque, modele, millesime) {
   return (cb) =>
     $.get(`http://www.lacentrale.fr/cote-voitures-${marque}-${modele}--${millesime}-.html`).then(function(content){
-    const data = $(content);
+    const data = parseHtml(content);
     const versions = $(data).find('.listingResult .listingResultLine h3');
     const res = [];
     for (var i = 0; i < versions.length; i++) {
