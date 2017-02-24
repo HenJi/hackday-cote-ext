@@ -3,7 +3,7 @@ var container;
 var versions;
 
 
-function selectV(versions) {
+function selectVersions(versions) {
   var html = '<div class="selectFinition"><p>Sélectionnez une finition</p><select>'
   for(var i = 0; i < versions.length; i++) {
     html = html + `<option value=${versions[i]}>${versions[i]}</option>`
@@ -16,12 +16,12 @@ function printNum(i) {
   return i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
-function coteBlock(title, prix, km) {
+function coteBlock(title, prix, kmText) {
   return (
     `<div class="cote-info">`
     + `<div class="cote-data">`
       + `<p class="title">${title}</p> `
-      + `<p class="km">Pour un kilométrage de :<br/>${printNum(km)} km</p>`
+      + `<p class="km">${kmText}</p>`
     + `</div>`
     + `<div class="cote-prix">${printNum(prix)} €</div>`
   + `</div>`
@@ -34,16 +34,29 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     const data = buildData(request.host, page);
     const { marque, modele, version, millesime } = data.voiture;
     const { km, prix } = data.annonce;
-    //if (!version) {
-      var select = getVersions(marque, modele, millesime)(function(v){
+    if (!version) {
+      getVersions(marque, modele, millesime)(function(versions){
         $(container).html(
-          selectV(v)
-          + coteBlock("Côte brute", prix, km)
-          + coteBlock("Côte affinée", prix, km)
+          selectVersions(versions)
         )
       })
-    //}
-    //else $('#message').append(`<div class="data">\n Marque : ${marque}\nModèle : ${modele}\nVersion : ${version}</div>`);
+    } else {
+      const mois = parseInt(data.annonce.miseEnCirculation.split("/")[1].trim())
+      getCotes(marque, modele, version, millesime, km, mois)(function(cotes){
+        console.dir(cotes);
+        if (cotes) {
+          const { cote_brute, cote_perso, price_new, year_mileage } = cotes;
+          $(container).html(
+            coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
+            + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
+          );
+        } else {
+          $(container).html(
+            coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
+          )
+        }
+      });
+    }
   }
 });
 

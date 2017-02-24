@@ -51,6 +51,7 @@ select {
 }
 
 .cote-prix {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   text-align: right;
+  width: 35%;
 }
