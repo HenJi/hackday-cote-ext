@@ -7,7 +7,7 @@ var LACENTRALE = (function () {
       return $.get(url, {tri:"VE_MILEAGE", sens:1, marque, modele, annee:anneeMin, annee2:anneeMax}).then(function(content){
         const data = parseHtml(content);
         const nb = $(data).find(".numAnn")[0].textContent;
-        console.log(nb+" annonces");
+        console.log(nb+" annonces lacentrale");
         const { annonces, moyenne } = getDetailAnnonces(data);
         cb({ nb, annonces, moyenne });
       })

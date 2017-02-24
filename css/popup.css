@@ -7,7 +7,7 @@ body #container {
 
 /* Selecteur finition */
 
-.selectFinition, #similar {
+.selectFinition {
   padding: 15px 15px;
   border-bottom: solid 1px #CDCDCD;
 }
@@ -54,4 +54,15 @@ select {
   font-size: 1.15rem;
   text-align: right;
   width: 35%;
+}
+
+/* Annonces imilaires */
+
+#similar .subtitle {
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+#similar .cote-info {
+  background-color: transparent;
 }

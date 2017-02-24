@@ -14,13 +14,14 @@ function afficherCotes(container, version){
         coteBlock("Côte brute", cote_brute, `Pour un kilométrage annuel de :<br/>${printNum(year_mileage)} km`)
         + coteBlock("Côte affinée", cote_perso, `Pour un kilométrage de :<br/>${printNum(km)} km`)
       );
-      /*
       LACENTRALE.getAnnonces(marque, modele, millesime, millesime, version)(function(res){
+        console.dir(res)
+        const { nb, moyenne } = res;
         $("#similar").html(
-          '<div class="subtitle"></div>'
+          '<div class="subtitle">Valeurs de vente constatée</div>'
+          + coteBlock("LaCentrale", moyenne, `Pour ${nb} annonces similaires`)
         )
       })
-      */
     } else
       $(container).html(
         coteBlock("Côte brute", "N/C", "Pas de côte disponible pour ce véhicule")
